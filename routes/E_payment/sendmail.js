@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 //Send mail Cash
+const env = require('../../env');
+
 router.post('/', function(req, res) {
     console.log(req.body)
     try {
@@ -162,8 +164,8 @@ router.post('/', function(req, res) {
 
             // true for 465, false for other ports
             auth: {
-                user: 'bakeryute@gmail.com', // generated ethereal user
-                pass: 'rqwufehgnrffjjfa' // generated ethereal password
+                user: env.userMail, // generated ethereal user
+                pass: env.passMail // generated ethereal password
             },
             tls: {
                 rejectUnauthorized: false
@@ -172,7 +174,7 @@ router.post('/', function(req, res) {
 
         // setup email data with unicode symbols
         var mailOptions = {
-            from: 'bakeryute@gmail.com', // sender address
+            from: env.userMail, // sender address
             to: req.body.email, // list of receivers
             subject: 'Node Contact Request', // Subject line
             text: 'Hello world?', // plain text body
@@ -343,8 +345,8 @@ router.post('/PayPal', function(req, res) {
 
         // true for 465, false for other ports
         auth: {
-            user: 'bakeryute@gmail.com', // generated ethereal user
-            pass: 'rqwufehgnrffjjfa' // generated ethereal password
+            user: env.userMail, // generated ethereal user
+            pass: env.passMail // generated ethereal password
         },
         tls: {
             rejectUnauthorized: false
@@ -353,7 +355,7 @@ router.post('/PayPal', function(req, res) {
 
     // setup email data with unicode symbols
     var mailOptions = {
-        from: 'bakeryute@gmail.com', // sender address
+        from: env.userMail, // sender address
         to: req.body.email, // list of receivers
         subject: 'Node Contact Request', // Subject line
         text: 'Hello world?', // plain text body

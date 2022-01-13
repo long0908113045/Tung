@@ -9,18 +9,18 @@ const order = require('../../models/E_payment/order');
 const open = require('open');
 const { url } = require('inspector');
 const { Console } = require('console');
-
+const env = require('../../env');
 
 const partnerCode = "MOMOXHXV20211219";
 const accessKey = "id1nslsKSoaxS8BL";
 const secretKey = "TSV7NwMOpKJTF7LdPBGsveHfUaNqIYqM";
-const redirectUrl = "http://localhost:3000/paymentMoMo/returnUrl";
-const ipnUrl = "http://localhost:3000/paymentMoMo/notifyUrl";
+const redirectUrl = env.hostBE + "/paymentMoMo/returnUrl";
+const ipnUrl = env.hostBE + "/paymentMoMo/notifyUrl";
 const requestType = "captureWallet"
 const orderInfo = "payment for cake store";
 
 
-var returnUrl = "http://localhost:4200"
+var returnUrl = env.hostFE ;
 router.post('/', function (request, response) {
     const requestId = partnerCode + new Date().getTime();
     const extraData = encodeBase64(JSON.stringify(request.body))
@@ -78,12 +78,12 @@ router.get('/returnUrl', function (req, res) {
     if (resultQuery.signature === encrypt(rawSignature)) {
         if (req.query.resultCode == 0) {
             
-            res.redirect(`http://localhost:4200/payment/${extradata.customerID}?resultCode=${resultQuery.resultCode}`)
+            res.redirect(`${env.hostFE}/payment/${extradata.customerID}?resultCode=${resultQuery.resultCode}`)
 
             
         } else {
             
-            res.redirect(`http://localhost:4200/payment/${extradata.customerID}?resultCode=${resultQuery.resultCode}`)
+            res.redirect(`${env.hostFE}/payment/${extradata.customerID}?resultCode=${resultQuery.resultCode}`)
         }
     } else {
         res.status(500).json({ "result": "data invalid" })
