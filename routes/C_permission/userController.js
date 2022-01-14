@@ -6,6 +6,7 @@ var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var superSecret = 'toihocmean';
 const nodemailer = require('nodemailer');
+const env = require('../../env')
 //user
 //register
 router.post('/signup', function(req, res) {
@@ -37,7 +38,7 @@ router.post('/signup', function(req, res) {
                         });
                       
                         var output = `
-                        To confirm your account, please click here : http://localhost:4200/confirm-account/${token}
+                        To confirm your account, please click here : ${env.hostFE}/confirm-account/${token}
                         `
                         console.log(output)
                        
